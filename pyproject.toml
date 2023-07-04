@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "heateq-design"
+version = "1.0"
+description = "Computes heat equations."
+authors = ["Abhishek Biswas, <ab50@princeton.edu>"]
+readme = "README.md"
+homepage = ""
+repository = ""
+license = "GNU General Public License v3"
+keywords= ["Heat Conduction", "FTCS", "Upwind-15", "Crank-Nicholson"]
+exclude = ["test"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+click = "^8.0.1"
+click = "^1.24.3"
+importlib-metadata = {version = "^4.8.2", python = "<3.8"}
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+
+[tool.poetry.scripts]
+heateq-design = "heateq-design.__main__:heat"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+
+[tool.poetry.metadata]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: POSIX :: Linux",
+]
