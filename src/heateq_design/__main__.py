@@ -1,8 +1,8 @@
 import click
 from time import time
-import ftcs
-import upwind15
-import crankn
+from .ftcs import FTCS
+from .upwind15 import UpWind15
+from .crankn import CrankN
 from . import __version__
 
 
@@ -53,19 +53,19 @@ from . import __version__
 @click.option("--noout", required=False, default=0, show_default=True,
               type=click.INT,
               help="disable all file outputs")
-def heat(runame: str, prec: str, alpha: float, lenx: float,
+def main(runame: str, prec: str, alpha: float, lenx: float,
          dx: float, dt: float, maxt: float, bc0: float,
          bc1: float, ic: str, alg: str, savi: int,
-         save: int, outi: int, noout: int):
-    """Main entry point for heateq-design."""
+         save: int, outi: int, noout: int) -> None:
+    """Main entry point for heateq_design."""
     click.echo('Invoking heat equation solver...')
     t0 = time()
     if alg == 'ftcs':
-        heat_solver = ftcs.FTCS(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
+        heat_solver = FTCS(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
     elif alg == 'upwind15':
-        heat_solver = upwind15.UpWind15(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
+        heat_solver = UpWind15(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
     else:
-        heat_solver = crankn.CrankN(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
+        heat_solver = CrankN(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
     heat_solver.solve()
     t1 = time() - t0
     click.echo('Solver complete. Results generated here:' + runame)

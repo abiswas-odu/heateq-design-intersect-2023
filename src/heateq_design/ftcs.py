@@ -1,4 +1,4 @@
-from heateq import HeatEq
+from .heateq import HeatEq
 
 
 class FTCS(HeatEq):

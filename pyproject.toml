@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "heateq-design"
-version = "1.0"
+version = "1.1"
 description = "Computes heat equations."
 authors = ["Abhishek Biswas, <ab50@princeton.edu>"]
 readme = "README.md"
-homepage = ""
-repository = ""
+homepage = "https://github.com/abiswas-odu/heateq-design-intersect-2023"
+repository = "https://github.com/abiswas-odu/heateq-design-intersect-2023.git"
 license = "GNU General Public License v3"
 keywords= ["Heat Conduction", "FTCS", "Upwind-15", "Crank-Nicholson"]
 exclude = ["test"]
@@ -13,14 +13,14 @@ exclude = ["test"]
 [tool.poetry.dependencies]
 python = "^3.9"
 click = "^8.0.1"
-click = "^1.24.3"
+numpy = "^1.24.3"
 importlib-metadata = {version = "^4.8.2", python = "<3.8"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
 
 [tool.poetry.scripts]
-heateq-design = "heateq-design.__main__:heat"
+heateq-design = "heateq_design.__main__:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
