@@ -5,8 +5,60 @@ import math
 
 
 class HeatEq(ABC):
+    """
+    Abstract base class representing the heat equation.
+
+    Methods:
+        set_initial_condition():
+            Sets the initial condition based on the specified string.
+
+        initialize():
+            Abstract method to be implemented by subclasses. Initializes the heat equation.
+
+        update_solution():
+            Abstract method to be implemented by subclasses. Updates the solution.
+
+        solve():
+            Solves the heat equation by iterating until the maximum number of iterations or a change threshold is reached.
+
+    Attributes:
+        lenx (float): Length of the domain.
+        maxt (float): Maximum time.
+        alpha (float): Thermal diffusivity.
+        dx (float): Spatial step size.
+        dt (float): Time step size.
+        bc0 (float): Boundary condition at x = 0.
+        bc1 (float): Boundary condition at x = lenx.
+        ic (str): Initial condition string.
+        outi (int): Output interval.
+        max_iter (int): Maximum number of iterations.
+        Nx (int): Number of spatial grid points.
+        Nt (int): Number of time steps.
+        curr (np.ndarray): Current solution vector.
+        last (np.ndarray): Solution vector from the previous time step.
+        exact (np.ndarray): Exact solution vector.
+        change_history (np.ndarray): History of solution changes.
+        error_history (np.ndarray): History of solution errors.
+
+    """
+
     def __init__(self, lenx: float, maxt: float, alpha: float, dx: float,
                  dt: float, bc0: float, bc1: float, ic: str, outi: int):
+        """
+        Initializes the HeatEq class with the specified parameters.
+
+        Args:
+            lenx (float): Length of the domain.
+            maxt (float): Maximum time.
+            alpha (float): Thermal diffusivity.
+            dx (float): Spatial step size.
+            dt (float): Time step size.
+            bc0 (float): Boundary condition at x = 0.
+            bc1 (float): Boundary condition at x = lenx.
+            ic (str): Initial condition string.
+            outi (int): Output interval.
+
+        """
         self.alpha = alpha
         self.dx = dx
         self.dt = dt
@@ -30,6 +82,9 @@ class HeatEq(ABC):
         self.error_history = np.zeros(self.Nx)
 
     def set_initial_condition(self):
+        """
+        Sets the initial condition based on the specified string.
+        """
         if self.ic.startswith("const("):  # const(val)
             cval = float(self.ic[self.ic.find("(") + 1: self.ic.find(")")])
             self.last[self.last == 0] = cval
@@ -77,13 +132,24 @@ class HeatEq(ABC):
 
     @abstractmethod
     def initialize(self):
+        """
+        Abstract method to be implemented by subclasses.
+        Initializes the heat equation.
+        """
         pass
 
     @abstractmethod
     def update_solution(self):
+        """
+        Abstract method to be implemented by subclasses.
+        Updates the solution.
+        """
         pass
 
     def solve(self):
+        """
+        Solves the heat equation by iterating until the maximum number of iterations or a change threshold is reached.
+        """
         self.initialize()
 
         # Iterate to max iterations or solution change is below threshold

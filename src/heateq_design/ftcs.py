@@ -2,10 +2,33 @@ from .heateq import HeatEq
 
 
 class FTCS(HeatEq):
+    """
+    This class represents the Forward-Time Central-Space (FTCS) scheme for solving the heat equation.
+
+    Methods:
+        initialize():
+            Initializes the FTCS scheme by setting the initial conditions.
+
+        update_solution():
+            Updates the solution using the FTCS algorithm.
+
+    Attributes:
+        Inherits attributes from the base class HeatEq.
+
+    """
     def initialize(self):
+        """
+        Initializes the FTCS scheme by setting the initial conditions.
+        """
         self.set_initial_condition()
 
     def update_solution(self):
+        """
+        Updates the solution using the FTCS algorithm.
+
+        Returns:
+            bool: True if the update is successful and within stability limits, False otherwise.
+        """
         r = self.alpha * self.dt / (self.dx * self.dx)
 
         # sanity check for stability

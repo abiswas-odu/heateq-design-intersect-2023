@@ -3,9 +3,53 @@ import numpy as np
 
 
 class CrankN(HeatEq):
+    """
+    This class represents the Crank-Nicolson scheme for solving the heat equation.
 
+    Args:
+        lenx (float): Length of the domain in the x-direction.
+        maxt (float): Maximum time for the simulation.
+        alpha (float): Thermal diffusivity.
+        dx (float): Spatial step size.
+        dt (float): Time step size.
+        bc0 (float): Boundary condition at x = 0.
+        bc1 (float): Boundary condition at x = lenx.
+        ic (str): Initial condition type.
+        outi (int): Output interval.
+
+    Methods:
+        __init__(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi):
+            Initializes the Crank-Nicolson scheme.
+
+        r83_np_fa():
+            Factors the tridiagonal matrix.
+
+        initialize():
+            Initializes the Crank-Nicolson scheme by setting the initial conditions.
+
+        update_solution():
+            Updates the solution using the Crank-Nicolson algorithm.
+
+    Attributes:
+        Inherits attributes from the base class HeatEq.
+
+    """
     def __init__(self, lenx: float, maxt: float, alpha: float, dx: float, dt: float, bc0: float, bc1: float, ic: str,
                  outi: int):
+        """
+        Initializes the Crank-Nicolson scheme.
+
+        Args:
+            lenx (float): Length of the domain in the x-direction.
+            maxt (float): Maximum time for the simulation.
+            alpha (float): Thermal diffusivity.
+            dx (float): Spatial step size.
+            dt (float): Time step size.
+            bc0 (float): Boundary condition at x = 0.
+            bc1 (float): Boundary condition at x = lenx.
+            ic (str): Initial condition type.
+            outi (int): Output interval.
+        """
         super().__init__(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
         w = self.alpha * self.dt / self.dx / self.dx
 
@@ -29,6 +73,9 @@ class CrankN(HeatEq):
         self.r83_np_fa()
 
     def r83_np_fa(self):
+        """
+        Factors the tridiagonal matrix.
+        """
         for idx in range(1, self.Nx):
             assert (self.cn_Amat[1 + (idx - 1) * 3] != 0.0)
 
@@ -43,9 +90,18 @@ class CrankN(HeatEq):
         assert (self.cn_Amat[1 + (self.Nx - 1) * 3] != 0.0)
 
     def initialize(self):
+        """
+        Factors the tridiagonal matrix.
+        """
         self.set_initial_condition()
 
     def update_solution(self):
+        """
+        Updates the solution using the Crank-Nicolson algorithm.
+
+        Returns:
+            bool: True if the update is successful, False otherwise.
+        """
         # r83_np_sl
         for idx in range(self.Nx):
             self.curr[idx] = self.last[idx]
