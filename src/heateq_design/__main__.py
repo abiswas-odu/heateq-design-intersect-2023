@@ -66,7 +66,7 @@ def main(runame: str, prec: str, alpha: float, lenx: float,
         heat_solver = UpWind15(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
     else:
         heat_solver = CrankN(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
-    heat_solver.solve()
+    heat_solver.solve(runame)
     t1 = time() - t0
     click.echo('Solver complete. Results generated here:' + runame)
     click.echo("Time elapsed: " + str(t1))

@@ -1,7 +1,16 @@
+import os.path
 from abc import ABC, abstractmethod
 import numpy as np
 import random
 import math
+import shutil
+
+
+def write_array(file_name, var_name, dx, a):
+    with open(file_name, 'w') as out_f:
+        out_f.write('# {0}\n'.format(var_name))
+        for i in range(0, len(a)):
+            out_f.write('{0} {1}\n'.format(i*dx, a[i]))
 
 
 class HeatEq(ABC):
@@ -146,10 +155,14 @@ class HeatEq(ABC):
         """
         pass
 
-    def solve(self):
+    def solve(self, output_name):
         """
         Solves the heat equation by iterating until the maximum number of iterations or a change threshold is reached.
         """
+        if os.path.isdir(output_name):
+            shutil.rmtree(output_name)
+        os.makedirs(output_name)
+
         self.initialize()
 
         # Iterate to max iterations or solution change is below threshold
@@ -166,7 +179,7 @@ class HeatEq(ABC):
             # Handle possible termination by change threshold
             if self.maxt == self.max_iter or change < (-self.maxt * -self.maxt):
                 print("Stopped after {0} iterations for threshold {1}\n".format(ti, change))
-                return
+                break
 
             if self.outi and ti % self.outi == 0:
                 print("Iteration {0}: last change l2={1}\n".format(ti, change))
@@ -174,3 +187,6 @@ class HeatEq(ABC):
             # Copy current solution to last
             self.last = self.curr
             ti = ti + 1
+        write_array(os.path.join(output_name, output_name + '_soln_final.curve'),
+                         'Temperature', self.dx, self.curr)
+
