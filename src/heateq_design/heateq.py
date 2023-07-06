@@ -10,7 +10,7 @@ def write_array(file_name, var_name, dx, a):
     with open(file_name, 'w') as out_f:
         out_f.write('# {0}\n'.format(var_name))
         for i in range(0, len(a)):
-            out_f.write('{0} {1}\n'.format(i*dx, a[i]))
+            out_f.write('{0:8.4f} {1:8.4f}\n'.format(i*dx, a[i]))
 
 
 class HeatEq(ABC):
