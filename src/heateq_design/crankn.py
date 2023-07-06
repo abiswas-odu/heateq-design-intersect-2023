@@ -16,7 +16,7 @@ class CrankN(HeatEq):
         bc1 (float): Boundary condition at x = lenx.
         ic (str): Initial condition type.
         outi (int): Output interval.
-
+        savi (int): Save interval.
     Methods:
         __init__(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi):
             Initializes the Crank-Nicolson scheme.
@@ -35,7 +35,7 @@ class CrankN(HeatEq):
 
     """
     def __init__(self, lenx: float, maxt: float, alpha: float, dx: float, dt: float, bc0: float, bc1: float, ic: str,
-                 outi: int):
+                 outi: int, savi: int):
         """
         Initializes the Crank-Nicolson scheme.
 
@@ -49,8 +49,9 @@ class CrankN(HeatEq):
             bc1 (float): Boundary condition at x = lenx.
             ic (str): Initial condition type.
             outi (int): Output interval.
+            savi (int): Save interval.
         """
-        super().__init__(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
+        super().__init__(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi, savi)
         w = self.alpha * self.dt / self.dx / self.dx
 
         # Build a tri-diagonal matrix

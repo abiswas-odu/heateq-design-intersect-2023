@@ -52,7 +52,7 @@ class HeatEq(ABC):
     """
 
     def __init__(self, lenx: float, maxt: float, alpha: float, dx: float,
-                 dt: float, bc0: float, bc1: float, ic: str, outi: int):
+                 dt: float, bc0: float, bc1: float, ic: str, outi: int, savi: int):
         """
         Initializes the HeatEq class with the specified parameters.
 
@@ -66,7 +66,7 @@ class HeatEq(ABC):
             bc1 (float): Boundary condition at x = lenx.
             ic (str): Initial condition string.
             outi (int): Output interval.
-
+            savi (int): Save interval.
         """
         self.alpha = alpha
         self.dx = dx
@@ -78,6 +78,7 @@ class HeatEq(ABC):
         self.maxt = maxt
         self.max_iter = 99999
         self.outi = outi
+        self.savi = savi
 
         self.Nx = int(self.lenx / self.dx) + 1
         self.Nt = int(self.maxt / self.dt)
@@ -165,6 +166,10 @@ class HeatEq(ABC):
 
         self.initialize()
 
+        # Write initial condition
+        write_array(os.path.join(output_name, output_name + '_soln_{0}.curve'.format(0)),
+                    'Temperature', self.dx, self.curr)
+
         # Iterate to max iterations or solution change is below threshold
         ti = 0
         while (ti * self.dt) < self.maxt:
@@ -175,6 +180,10 @@ class HeatEq(ABC):
             # compute amount of change in solution
             diff = self.curr - self.last
             change = np.sum(diff*diff)
+
+            if ti > 0 and self.savi and ti % self.savi == 0:
+                write_array(os.path.join(output_name, output_name + '_soln_{0}.curve'.format(ti)),
+                            'Temperature', self.dx, self.curr)
 
             # Handle possible termination by change threshold
             if self.maxt == self.max_iter or change < (-self.maxt * -self.maxt):

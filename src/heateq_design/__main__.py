@@ -61,11 +61,11 @@ def main(runame: str, prec: str, alpha: float, lenx: float,
     click.echo('Invoking heat equation solver...')
     t0 = time()
     if alg == 'ftcs':
-        heat_solver = FTCS(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
+        heat_solver = FTCS(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi, savi)
     elif alg == 'upwind15':
-        heat_solver = UpWind15(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
+        heat_solver = UpWind15(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi, savi)
     else:
-        heat_solver = CrankN(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi)
+        heat_solver = CrankN(lenx, maxt, alpha, dx, dt, bc0, bc1, ic, outi, savi)
     heat_solver.solve(runame)
     t1 = time() - t0
     click.echo('Solver complete. Results generated here:' + runame)
