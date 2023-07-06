@@ -168,7 +168,7 @@ class HeatEq(ABC):
 
         # Write initial condition
         write_array(os.path.join(output_name, output_name + '_soln_{0}.curve'.format(0)),
-                    'Temperature', self.dx, self.curr)
+                    'Temperature', self.dx, self.last)
 
         # Iterate to max iterations or solution change is below threshold
         ti = 0
@@ -179,14 +179,14 @@ class HeatEq(ABC):
 
             # compute amount of change in solution
             diff = self.curr - self.last
-            change = np.sum(diff*diff)
+            change = np.sum(diff*diff) / self.Nx
 
             if ti > 0 and self.savi and ti % self.savi == 0:
                 write_array(os.path.join(output_name, output_name + '_soln_{0}.curve'.format(ti)),
                             'Temperature', self.dx, self.curr)
 
             # Handle possible termination by change threshold
-            if self.maxt == self.max_iter or change < (-self.maxt * -self.maxt):
+            if self.maxt == self.max_iter and change < (-self.maxt * -self.maxt):
                 print("Stopped after {0} iterations for threshold {1}\n".format(ti, change))
                 break
 
@@ -194,7 +194,7 @@ class HeatEq(ABC):
                 print("Iteration {0}: last change l2={1}\n".format(ti, change))
 
             # Copy current solution to last
-            self.last = self.curr
+            self.last[:] = self.curr
             ti = ti + 1
         write_array(os.path.join(output_name, output_name + '_soln_final.curve'),
                          'Temperature', self.dx, self.curr)
