@@ -16,12 +16,12 @@ keywords= ["Heat Conduction", "FTCS", "Upwind-15", "Crank-Nicholson"]
 exclude = ["test"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
-click = "^8.0.1"
-numpy = "^1.24.3"
+python = ">=3.9"
+click = ">=8.0.1"
+numpy = ">=1.24.3"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
+pytest = ">=6.2.5"
 
 [tool.poetry.scripts]
 heateq-design = "heateq_design.__main__:main"
@@ -32,7 +32,6 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
-    "Topic :: Scientific/Engineering :: Training",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Operating System :: POSIX :: Linux",
 ]
