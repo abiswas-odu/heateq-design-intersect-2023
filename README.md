@@ -46,14 +46,16 @@ with higher spatial order than FTCS.
 ## Install Instructions
 
 Open "Command Prompt" and create a conda environment and activate it:
-```
-conda create -n heateq_env python=3.9
+
+```bash
+conda create -n heateq_env python=3.11
 conda activate heateq_env
 ```
 
 Clone the repository and install:
-```
+
+```bash
 git clone https://github.com/abiswas-odu/heateq-design-intersect-2023.git
 cd heateq-design-intersect-2023
-pip install .
+pip install -e .
 ```
