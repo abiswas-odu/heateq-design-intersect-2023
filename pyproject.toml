@@ -8,7 +8,7 @@ homepage = "https://github.com/abiswas-odu/heateq-design-intersect-2023"
 repository = "https://github.com/abiswas-odu/heateq-design-intersect-2023.git"
 license = "GNU General Public License v3"
 keywords= ["Heat Conduction", "FTCS", "Upwind-15", "Crank-Nicholson"]
-exclude = ["test"]
+exclude = ["tests"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
